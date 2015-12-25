@@ -20,4 +20,19 @@ extension String {
         let decrypted = try self.utf8.lazy.map({ $0 as UInt8 }).decrypt(cipher)
         return NSData(bytes: decrypted).base64EncodedStringWithOptions(NSDataBase64EncodingOptions.Encoding64CharacterLineLength)
     }
+
+#if os(OSX)
+	internal func bridge() -> NSString {
+		return self as NSString
+	}
+#endif
+}
+
+extension NSString {
+
+#if os(OSX)
+	internal func bridge() -> String {
+		return self as String
+	}
+#endif
 }
